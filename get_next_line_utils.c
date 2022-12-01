@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 15:17:57 by marvin            #+#    #+#             */
-/*   Updated: 2022/11/23 15:17:57 by marvin           ###   ########.fr       */
+/*   Updated: 2022/11/30 20:22:49 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,32 @@ char	*ft_strjoin(char *l_str, char *buff)
 	str[ft_strlen(l_str) + ft_strlen(buff)] = '\0';
 	free(l_str);
 	return (str);
+}
+
+char *ft_line(char *str)
+{
+	int		i;
+	char	*tab;
+
+	i = 0;
+	if (!str[i])
+		return (NULL);
+	while (str[i] && str[i] != '\n')
+		i++;
+	tab = (char *)malloc(sizeof(char) * (i + 2));
+	if(!tab)
+		return (NULL);
+	i = 0;
+	while (str[i] && str[i] != '\n')
+	{
+		tab[i] = str[i];
+		i++;
+	}
+	if (str[i] == '\n')
+	{
+		tab[i] = str[i];
+		i++;
+	}
+	tab[i] = '\0';
+	return (tab);
 }

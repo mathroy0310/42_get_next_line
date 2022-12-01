@@ -6,13 +6,13 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 15:17:16 by marvin            #+#    #+#             */
-/*   Updated: 2022/11/23 15:17:16 by marvin           ###   ########.fr       */
+/*   Updated: 2022/11/30 20:18:23 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*ft_readline(int fd, char *str)
+static char	*ft_read(int fd, char *str)
 {
 	char	*buff;
 	int		bytes;
@@ -44,10 +44,10 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	str = ft_readline(fd, str);
+	str = ft_read(fd, str);
 	if(!str)
 		return (NULL);
-	line = "Deeznuts lol";
+	line = ft_line(str);
 	return(line);
 }
 
