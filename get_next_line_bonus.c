@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static char	*ft_read(int fd, char *str)
 {
@@ -38,36 +38,45 @@ static char	*ft_read(int fd, char *str)
 
 char	*get_next_line(int fd)
 {
-	static char	*str;
+	static char	*str[1024];
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 1023)
 		return (NULL);
-	str = ft_read(fd, str);
+	str[fd] = ft_read(fd, str[fd]);
 	if (!str)
 		return (NULL);
-	line = ft_line(str);
-	str = ft_next_line(str);
+	line = ft_line(str[fd]);
+	str = ft_next_line(str[fd]);
 	return (line);
 }
 
-// int	main(void)
-// {
-// 	int		fd;
-// 	char	*tab;
-
-// 	fd = open("nl", O_RDONLY);
-// 	tab = get_next_line(fd);
-// 	printf("%s", tab);
-// 	free(tab);
-// 	tab = get_next_line(fd);
-// 	printf("%s", tab);
-// 	free(tab);
-// 	tab = get_next_line(fd);
-// 	printf("%s", tab);
-// 	free(tab);
-// 	tab = get_next_line(fd);
-// 	printf("%s", tab);
-// 	close(fd);
-// 	return (0);
-// }
+/*int	main(void)
+{
+	char	*line;
+	int		i;
+	int		fd1;
+	int		fd2;
+	int		fd3;
+	fd1 = open("test.txt", O_RDONLY);
+	fd2 = open("test2.txt", O_RDONLY);
+	fd3 = open("test3.txt", O_RDONLY);
+	i = 1;
+	while (i < 7)
+	{
+		line = get_next_line(fd1);
+		printf("line [%02d]: %s", i, line);
+		free(line);
+		line = get_next_line(fd2);
+		printf("line [%02d]: %s", i, line);
+		free(line);
+		line = get_next_line(fd3);
+		printf("line [%02d]: %s", i, line);
+		free(line);
+		i++;
+	}
+	close(fd1);
+	close(fd2);
+	close(fd3);
+	return (0);
+}*/
