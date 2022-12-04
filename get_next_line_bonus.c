@@ -44,10 +44,10 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 1023)
 		return (NULL);
 	str[fd] = ft_read(fd, str[fd]);
-	if (!str)
+	if (!str[fd])
 		return (NULL);
 	line = ft_line(str[fd]);
-	str = ft_next_line(str[fd]);
+	str[fd] = ft_next_line(str[fd]);
 	return (line);
 }
 
