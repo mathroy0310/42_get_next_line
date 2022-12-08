@@ -1,38 +1,96 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maroy <maroy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 15:17:16 by marvin            #+#    #+#             */
-/*   Updated: 2022/12/02 20:09:28 by maroy            ###   ########.fr       */
+/*   Updated: 2022/12/08 11:12:47 by maroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
+static char	*ft_line(char *str)
+{
+	int		i;
+	char	*tab;
+
+	i = 0;
+	if (!str[i])
+		return (NULL);
+	while (str[i] && str[i] != '\n')
+		i++;
+	tab = (char *)malloc(sizeof(char) * (i + 2));
+	if (!tab)
+		return (NULL);
+	i = 0;
+	while (str[i] && str[i] != '\n')
+	{
+		tab[i] = str[i];
+		i++;
+	}
+	if (str[i] == '\n')
+	{
+		tab[i] = str[i];
+		i++;
+	}
+	tab[i] = '\0';
+	return (tab);
+}
+
+static char	*ft_next_line(char *str)
+{
+	int		i;
+	int		j;
+	char	*tab;
+
+	i = 0;
+	while (str[i] && str[i] != '\n')
+		i++;
+	if (!str[i])
+	{
+		free(str);
+		return (NULL);
+	}
+	tab = (char *)malloc(sizeof(char) * (ft_strlen(str) - i + 1));
+	if (!tab)
+	{
+		free(tab);
+		return (NULL);
+	}
+	i++;
+	j = 0;
+	while (str[i] && str)
+		tab[j++] = str[i++];
+	tab[j] = '\0';
+	free(str);
+	return (tab);
+}
+
 static char	*ft_read(int fd, char *str)
 {
-	char	*buff;
+	char	*tmp;
 	int		bytes;
 
-	buff = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!buff)
-		return (NULL);
+	tmp = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!tmp)
+		return (0);
 	bytes = 1;
 	while (!ft_strchr(str, '\n') && bytes != 0)
 	{
-		bytes = read(fd, buff, BUFFER_SIZE);
+		bytes = read(fd, tmp, BUFFER_SIZE);
 		if (bytes == -1)
 		{
-			free(buff);
-			return (NULL);
+			free(tmp);
+			free(str);
+			return (0);
 		}
-		buff[bytes] = '\0';
-		str = ft_strjoin(str, buff);
+		tmp[bytes] = '\0';
+		str = ft_strjoin(str, tmp);
 	}
-	free(buff);
+	free(tmp);
 	return (str);
 }
 

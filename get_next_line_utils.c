@@ -6,7 +6,7 @@
 /*   By: maroy <maroy@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 15:17:57 by marvin            #+#    #+#             */
-/*   Updated: 2022/12/03 00:00:19 by maroy            ###   ########.fr       */
+/*   Updated: 2022/12/08 11:11:05 by maroy            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,58 +68,4 @@ char	*ft_strjoin(char *s1, char *s2)
 	dst[ft_strlen(s1) + ft_strlen(s2)] = '\0';
 	free(s1);
 	return (dst);
-}
-
-char	*ft_line(char *str)
-{
-	int		i;
-	char	*tab;
-
-	i = 0;
-	if (!str[i])
-		return (NULL);
-	while (str[i] && str[i] != '\n')
-		i++;
-	tab = (char *)malloc(sizeof(char) * (i + 2));
-	if (!tab)
-		return (NULL);
-	i = 0;
-	while (str[i] && str[i] != '\n')
-	{
-		tab[i] = str[i];
-		i++;
-	}
-	if (str[i] == '\n')
-	{
-		tab[i] = str[i];
-		i++;
-	}
-	tab[i] = '\0';
-	return (tab);
-}
-
-char	*ft_next_line(char *str)
-{
-	int		i;
-	int		j;
-	char	*tab;
-
-	i = 0;
-	while (str[i] && str[i] != '\n')
-		i++;
-	if (!str[i])
-	{
-		free(str);
-		return (NULL);
-	}
-	tab = (char *)malloc(sizeof(char) * (ft_strlen(str) - i + 1));
-	if (!tab)
-		return (NULL);
-	i++;
-	j = 0;
-	while (str[i])
-		tab[j++] = str[i++];
-	tab[j] = '\0';
-	free(str);
-	return (tab);
 }
